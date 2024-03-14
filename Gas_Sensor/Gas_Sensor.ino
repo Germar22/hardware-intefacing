@@ -29,3 +29,9 @@ void loop() {
 
   delay(1000); // Delay for stability
 }
+
+
+//Buzzer pin 5
+//A0 pin 32
+//D0 pin 14
+
