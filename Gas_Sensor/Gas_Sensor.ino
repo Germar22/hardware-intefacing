@@ -15,7 +15,7 @@ void loop() {
 
   // You need to calibrate the sensor and set the threshold accordingly
   // For demonstration purposes, I'm setting an arbitrary threshold of 500
-  int threshold = 500;
+  int threshold = 3000;
 
   if (sensorValue > threshold) {
     // If gas concentration exceeds the threshold, activate the buzzer
