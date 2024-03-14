@@ -27,7 +27,7 @@ void loop() {
     Serial.println("No gas detected.");
   }
 
-  delay(1000); // Delay for stability
+  delay(5000); // Delay for stability
 }
 
 
