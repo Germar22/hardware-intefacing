@@ -1,13 +1,13 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-const char WIFI_SSID[] = "PL2";
-const char WIFI_PASSWORD[] = "@PL22223";
+const char WIFI_SSID[] = "CMOICTD";
+const char WIFI_PASSWORD[] = "@CMOictd2022";
 
 String HOST_NAME = "http://afas.atwebpages.com"; // change to your PC's IP address
 String PATH_NAME   = "/alert.php";
 String queryString = "?coordinates";
-String coordinates = "=uli%nata";
+String coordinates = "6.07479, 125.14123";
 
 void setup() {
   Serial.begin(9600); 
