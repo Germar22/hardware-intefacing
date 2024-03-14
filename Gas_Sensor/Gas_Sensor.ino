@@ -1,30 +1,31 @@
-#define GAS_PIN A0
-#define BUZZER_PIN 4
+#define BUZZER_PIN 5 // Define the pin for the buzzer (GPIO12)
+#define SENSOR_PIN 32 // Define the analog pin connected to the gas sensor (GPIO32)
 
 void setup() {
+  pinMode(BUZZER_PIN, OUTPUT); // Set buzzer pin as output
+  digitalWrite(BUZZER_PIN, LOW); // Ensure buzzer is initially off
+  pinMode(SENSOR_PIN, INPUT);
   Serial.begin(9600);
-  pinMode(GAS_PIN, INPUT);
-  pinMode(BUZZER_PIN, OUTPUT);
 }
 
 void loop() {
-  // Read the gas sensor data
-  int gasValue = analogRead(GAS_PIN);
+  int sensorValue = analogRead(SENSOR_PIN); // Read analog value from sensor
+  Serial.print("Sensor Value: ");
+  Serial.println(sensorValue);
 
-  // Print the gas sensor raw value
-  Serial.print("Gas Sensor Value: ");
-  Serial.println(gasValue);
+  // You need to calibrate the sensor and set the threshold accordingly
+  // For demonstration purposes, I'm setting an arbitrary threshold of 500
+  int threshold = 500;
 
-  // Check if the gas concentration exceeds a threshold (adjust as needed)
-  if (gasValue > 200) {
-    // Activate the buzzer if the concentration is above the threshold
+  if (sensorValue > threshold) {
+    // If gas concentration exceeds the threshold, activate the buzzer
     digitalWrite(BUZZER_PIN, HIGH);
-    Serial.println("Gas Detected! Buzzer activated.");
+    Serial.println("Gas detected!");
   } else {
-    // Turn off the buzzer if the concentration is below the threshold
+    // Otherwise, turn off the buzzer
     digitalWrite(BUZZER_PIN, LOW);
+    Serial.println("No gas detected.");
   }
 
-  delay(500); // Adjust the delay as needed
+  delay(1000); // Delay for stability
 }
-
