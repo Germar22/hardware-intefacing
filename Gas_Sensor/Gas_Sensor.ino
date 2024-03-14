@@ -20,14 +20,14 @@ void loop() {
   if (sensorValue > threshold) {
     // If gas concentration exceeds the threshold, activate the buzzer
     digitalWrite(BUZZER_PIN, HIGH);
-    Serial.println("Gas detected!");
+    Serial.println("fire detected!");
   } else {
     // Otherwise, turn off the buzzer
     digitalWrite(BUZZER_PIN, LOW);
-    Serial.println("No gas detected.");
+    Serial.println("No fire detected.");
   }
 
-  delay(5000); // Delay for stability
+  delay(500); // Delay for stability
 }
 
 
