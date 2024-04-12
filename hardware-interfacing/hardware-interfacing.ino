@@ -1,51 +1,26 @@
-const int smokeAlarmPin = 21; // Digital input pin connected to the smoke alarm
-const int ledPin = 22; // Digital output pin connected to an LED for indicating smoke detection
-
-const int numReadings = 10; // Number of readings to average for noise filtering
-int readings[numReadings];  // Array to store readings for averaging
-int idx = 0;  // Index for storing the current reading
-int total = 0;  // Total sum of readings
+const int soundPin = A0;   // KY-037 sound sensor analog interface
+const int ledPin = 13;     // Arduino LED pin
+int soundVal;              // sound sensor readings
 
 void setup() {
-  pinMode(smokeAlarmPin, INPUT);
+  pinMode(soundPin, INPUT);
   pinMode(ledPin, OUTPUT);
-  
-  Serial.begin(115200); // Initialize serial communication
-  
-  // Initialize the readings array
-  for (int i = 0; i < numReadings; i++) {
-    readings[i] = 0;
-  }
+  Serial.begin(9600);
 }
 
 void loop() {
-  // Read the sensor input
-  int sensorReading = digitalRead(smokeAlarmPin);
+  // Read the sound sensor
+  soundVal = analogRead(soundPin);
 
-  // Subtract the oldest reading from the total
-  total -= readings[idx];
-  // Add the new reading to the total
-  total += sensorReading;
-  // Store the new reading in the readings array
-  readings[idx] = sensorReading;
-  // Increment the index for the next reading
-  idx = (idx + 1) % numReadings;
+  // Print sound value to serial
+  Serial.println(soundVal);
 
-  // Calculate the filtered value by averaging the readings
-  int filteredReading = total / numReadings;
-
-  if (filteredReading == HIGH) {
-    // Smoke detected
-    digitalWrite(ledPin, HIGH); // Turn on the LED
-    Serial.println("Smoke detected!"); // Output to serial monitor
-    // Add your additional actions here, such as sending notifications, activating alarms, etc.
-  } else {
-    // No smoke detected
-    digitalWrite(ledPin, LOW); // Turn off the LED
-    Serial.println("No smoke detected."); // Output to serial monitor
+  // If sound level is above a threshold, indicate a clap
+  if (soundVal > 500) {
+    digitalWrite(ledPin, HIGH); // Turn ON Arduino's LED
+    delay(100); // Wait for a short duration
+    digitalWrite(ledPin, LOW);  // Turn OFF Arduino's LED
   }
-
-  // Adjust delay as needed to avoid rapid polling
-  delay(500); 
 }
+
 
